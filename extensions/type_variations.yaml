@@ -1,0 +1,13 @@
+types:
+- string:
+  - name: dict
+    description: a dictionary encoded string
+  - name: bigoffset
+    description: The arrow large string representation of strings, still restricted to the default string size defined in Substrait.
+- struct:
+  - name: avro
+    description: an avro encoded struct
+  - name: cstruct
+    description: a cstruct representation of the struct
+  - name: dict
+    description: a arrow utf8 value using 
