@@ -33,3 +33,10 @@ scalar_functions:
           - value: boolean
           - value: boolean
         return: boolean
+  -
+    name: not
+    description: The not of a boolean value.
+    impls:
+      - args:
+          - value: boolean
+        return: boolean
