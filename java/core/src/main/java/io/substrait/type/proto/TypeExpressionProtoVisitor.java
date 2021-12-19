@@ -18,22 +18,22 @@ public class TypeExpressionProtoVisitor extends BaseProtoConverter<DerivationExp
     return nullable ? DERIVATION_NULLABLE : DERIVATION_REQUIRED;
   }
 
-  private static final DerivationTypes DERIVATION_NULLABLE = new DerivationTypes(Type.Nullability.NULLABLE);
-  private static final DerivationTypes DERIVATION_REQUIRED = new DerivationTypes(Type.Nullability.REQUIRED);
+  private static final DerivationTypes DERIVATION_NULLABLE = new DerivationTypes(Type.Nullability.NULLABILITY_NULLABLE);
+  private static final DerivationTypes DERIVATION_REQUIRED = new DerivationTypes(Type.Nullability.NULLABILITY_REQUIRED);
 
   @Override public DerivationExpression visit(final TypeExpression.BinaryOperation expr) {
     var opType = switch (expr.opType()) {
-      case ADD -> DerivationExpression.BinaryOp.OpType.PLUS;
-      case SUBTRACT -> DerivationExpression.BinaryOp.OpType.MINUS;
-      case MIN -> DerivationExpression.BinaryOp.OpType.MIN;
-      case MAX -> DerivationExpression.BinaryOp.OpType.MAX;
-      case LT -> DerivationExpression.BinaryOp.OpType.LESS_THAN;
-      //case LTE -> DerivationExpression.BinaryOp.OpType.LESS_THAN;
-      case GT -> DerivationExpression.BinaryOp.OpType.GREATER_THAN;
-      //case GTE -> DerivationExpression.BinaryOp.OpType.MINUS;
-      //case NOT_EQ -> DerivationExpression.BinaryOp.OpType.EQ;
-      case EQ -> DerivationExpression.BinaryOp.OpType.EQUALS;
-      case COVERS -> DerivationExpression.BinaryOp.OpType.COVERS;
+      case ADD -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_PLUS;
+      case SUBTRACT -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_MINUS;
+      case MIN -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_MIN;
+      case MAX -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_MAX;
+      case LT -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_LESS_THAN;
+      //case LTE -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_LESS_THAN;
+      case GT -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_GREATER_THAN;
+      //case GTE -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_MINUS;
+      //case NOT_EQ -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_EQ;
+      case EQ -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_EQUALS;
+      case COVERS -> DerivationExpression.BinaryOp.BinaryOpType.BINARY_OP_TYPE_COVERS;
       default -> throw new IllegalStateException("Unexpected value: " + expr.opType());
     };
     return DerivationExpression.newBuilder()
@@ -47,7 +47,7 @@ public class TypeExpressionProtoVisitor extends BaseProtoConverter<DerivationExp
   @Override public DerivationExpression visit(final TypeExpression.NotOperation expr) {
     return DerivationExpression.newBuilder().setUnaryOp(
         DerivationExpression.UnaryOp.newBuilder().setOpType(
-            DerivationExpression.UnaryOp.OpType.BOOLEAN_NOT)
+            DerivationExpression.UnaryOp.UnaryOpType.UNARY_OP_TYPE_BOOLEAN_NOT)
             .setArg(expr.inner().accept(this)))
         .build();
   }
@@ -192,11 +192,11 @@ public class TypeExpressionProtoVisitor extends BaseProtoConverter<DerivationExp
     }
 
     public DerivationExpression list(DerivationExpression type) {
-      return wrap(DerivationExpression.ExpressionList.newBuilder().setType(type).setNullability(Type.Nullability.NULLABLE).build());
+      return wrap(DerivationExpression.ExpressionList.newBuilder().setType(type).setNullability(Type.Nullability.NULLABILITY_NULLABLE).build());
     }
 
     public DerivationExpression map(DerivationExpression key, DerivationExpression value) {
-      return wrap(DerivationExpression.ExpressionMap.newBuilder().setKey(key).setValue(value).setNullability(Type.Nullability.NULLABLE).build());
+      return wrap(DerivationExpression.ExpressionMap.newBuilder().setKey(key).setValue(value).setNullability(Type.Nullability.NULLABILITY_REQUIRED).build());
     }
 
     @Override protected DerivationExpression wrap(final Object o) {

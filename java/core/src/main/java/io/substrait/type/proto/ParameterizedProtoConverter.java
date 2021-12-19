@@ -18,8 +18,8 @@ public class ParameterizedProtoConverter extends BaseProtoConverter<Parameterize
     return nullable ? PARAMETERIZED_NULLABLE : PARAMETERIZED_REQUIRED;
   }
 
-  private static final BaseProtoTypes<ParameterizedType, ParameterizedType.IntegerOption> PARAMETERIZED_NULLABLE = new ParameterizedTypes(Type.Nullability.NULLABLE);
-  private static final BaseProtoTypes<ParameterizedType, ParameterizedType.IntegerOption> PARAMETERIZED_REQUIRED = new ParameterizedTypes(Type.Nullability.REQUIRED);
+  private static final BaseProtoTypes<ParameterizedType, ParameterizedType.IntegerOption> PARAMETERIZED_NULLABLE = new ParameterizedTypes(Type.Nullability.NULLABILITY_NULLABLE);
+  private static final BaseProtoTypes<ParameterizedType, ParameterizedType.IntegerOption> PARAMETERIZED_REQUIRED = new ParameterizedTypes(Type.Nullability.NULLABILITY_REQUIRED);
 
   public ParameterizedType.IntegerOption i(final TypeExpression num) {
     return num.accept(new IntegerVisitor());
@@ -130,11 +130,11 @@ public class ParameterizedProtoConverter extends BaseProtoConverter<Parameterize
     }
 
     public ParameterizedType list(ParameterizedType type) {
-      return wrap(ParameterizedType.ParameterizedList.newBuilder().setType(type).setNullability(Type.Nullability.NULLABLE).build());
+      return wrap(ParameterizedType.ParameterizedList.newBuilder().setType(type).setNullability(Type.Nullability.NULLABILITY_NULLABLE).build());
     }
 
     public ParameterizedType map(ParameterizedType key, ParameterizedType value) {
-      return wrap(ParameterizedType.ParameterizedMap.newBuilder().setKey(key).setValue(value).setNullability(Type.Nullability.NULLABLE).build());
+      return wrap(ParameterizedType.ParameterizedMap.newBuilder().setKey(key).setValue(value).setNullability(Type.Nullability.NULLABILITY_NULLABLE).build());
     }
 
     @Override protected ParameterizedType wrap(final Object o) {

@@ -208,7 +208,7 @@ public interface Expression {
   }
 
   @Value.Immutable static abstract class DateLiteral implements Literal {
-    public abstract long value();
+    public abstract int value();
 
     public Type getType() {
       return Type.withNullability(nullable()).DATE;
@@ -573,10 +573,10 @@ public interface Expression {
   }
 
   enum AggregationPhase {
-    INITIAL_TO_INTERMEDIATE(io.substrait.proto.AggregationPhase.INITIAL_TO_INTERMEDIATE),
-    INTERMEDIATE_TO_INTERMEDIATE(io.substrait.proto.AggregationPhase.INTERMEDIATE_TO_INTERMEDIATE),
-    INITIAL_TO_RESULT(io.substrait.proto.AggregationPhase.INITIAL_TO_RESULT),
-    INTERMEDIATE_TO_RESULT(io.substrait.proto.AggregationPhase.INTERMEDIATE_TO_RESULT);
+    INITIAL_TO_INTERMEDIATE(io.substrait.proto.AggregationPhase.AGGREGATION_PHASE_INITIAL_TO_INTERMEDIATE),
+    INTERMEDIATE_TO_INTERMEDIATE(io.substrait.proto.AggregationPhase.AGGREGATION_PHASE_INTERMEDIATE_TO_INTERMEDIATE),
+    INITIAL_TO_RESULT(io.substrait.proto.AggregationPhase.AGGREGATION_PHASE_INITIAL_TO_RESULT),
+    INTERMEDIATE_TO_RESULT(io.substrait.proto.AggregationPhase.AGGREGATION_PHASE_INTERMEDIATE_TO_RESULT);
 
     private final io.substrait.proto.AggregationPhase proto;
 
@@ -600,11 +600,11 @@ public interface Expression {
   }
 
   public enum SortDirection {
-    ASC_NULLS_FIRST(io.substrait.proto.SortField.SortDirection.ASC_NULLS_FIRST),
-    ASC_NULLS_LAST(io.substrait.proto.SortField.SortDirection.ASC_NULLS_LAST),
-    DESC_NULLS_FIRST(io.substrait.proto.SortField.SortDirection.DESC_NULLS_FIRST),
-    DESC_NULLS_LAST(io.substrait.proto.SortField.SortDirection.DESC_NULLS_LAST),
-    CLUSTERED(io.substrait.proto.SortField.SortDirection.CLUSTERED);
+    ASC_NULLS_FIRST(io.substrait.proto.SortField.SortDirection.SORT_DIRECTION_ASC_NULLS_FIRST),
+    ASC_NULLS_LAST(io.substrait.proto.SortField.SortDirection.SORT_DIRECTION_ASC_NULLS_LAST),
+    DESC_NULLS_FIRST(io.substrait.proto.SortField.SortDirection.SORT_DIRECTION_DESC_NULLS_FIRST),
+    DESC_NULLS_LAST(io.substrait.proto.SortField.SortDirection.SORT_DIRECTION_DESC_NULLS_LAST),
+    CLUSTERED(io.substrait.proto.SortField.SortDirection.SORT_DIRECTION_CLUSTERED);
 
     private final io.substrait.proto.SortField.SortDirection proto;
 

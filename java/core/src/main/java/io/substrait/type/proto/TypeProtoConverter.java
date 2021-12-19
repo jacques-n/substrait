@@ -7,13 +7,13 @@ public class TypeProtoConverter extends BaseProtoConverter<Type, Integer> {
   static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(TypeProtoConverter.class);
 
   public static TypeExpressionVisitor<Type, RuntimeException> INSTANCE = new TypeProtoConverter();
-  
+
   public TypeProtoConverter() {
     super("Type literals cannot contain parameters or expressions.");
   }
 
-  private static final BaseProtoTypes<Type, Integer> NULLABLE = new Types(Type.Nullability.NULLABLE);
-  private static final BaseProtoTypes<Type, Integer> REQUIRED = new Types(Type.Nullability.REQUIRED);
+  private static final BaseProtoTypes<Type, Integer> NULLABLE = new Types(Type.Nullability.NULLABILITY_NULLABLE);
+  private static final BaseProtoTypes<Type, Integer> REQUIRED = new Types(Type.Nullability.NULLABILITY_REQUIRED);
 
   @Override public BaseProtoTypes<Type, Integer> typeContainer(final boolean nullable) {
     return nullable ? NULLABLE : REQUIRED;

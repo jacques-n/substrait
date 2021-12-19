@@ -25,7 +25,7 @@ dependencies {
     implementation("org.antlr:antlr4:4.9.2")
     annotationProcessor("org.immutables:value:2.8.8")
     compileOnly("org.immutables:value-annotations:2.8.8")
-    
+
 }
 
 java {
@@ -36,7 +36,7 @@ java {
 
 sourceSets {
     main {
-        proto.srcDir("../../binary")
+        proto.srcDir("../../proto")
         resources.srcDir("../../extensions")
         java.srcDir(file("build/generated/sources/antlr/main/java/"))
     }
@@ -47,7 +47,7 @@ project.configure<IdeaModel> {
         resourceDirs.addAll(listOf(
             file("../../text"),
             file("../../extensions"),
-            file("../../binary")
+            file("../../proto")
         ))
         generatedSourceDirs.addAll(listOf(
             file("build/generated/sources/antlr/main"),

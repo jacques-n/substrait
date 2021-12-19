@@ -36,6 +36,6 @@ public class FromProto {
   }
 
   private static TypeCreator n(io.substrait.proto.Type.Nullability n) {
-    return n == io.substrait.proto.Type.Nullability.NULLABLE ? TypeCreator.NULLABLE : TypeCreator.REQUIRED;
+    return n == io.substrait.proto.Type.Nullability.NULLABILITY_NULLABLE ? TypeCreator.NULLABLE : TypeCreator.REQUIRED;
   }
 }

@@ -61,25 +61,28 @@ public class ExpressionCreator {
     return Expression.BinaryLiteral.builder().nullable(nullable).value(ByteString.copyFrom(value)).build();
   }
 
-  public static Expression.DateLiteral date(boolean nullable, long value) {
+  public static Expression.DateLiteral date(boolean nullable, int value) {
     return Expression.DateLiteral.builder().nullable(nullable).value(value).build();
   }
 
   public static Expression.TimeLiteral time(boolean nullable, long value) {
     return Expression.TimeLiteral.builder().nullable(nullable).value(value).build();
   }
-  
+
   public static Expression.TimestampLiteral timestamp(boolean nullable, long value) {
     return Expression.TimestampLiteral.builder().nullable(nullable).value(value).build();
   }
 
   public static Expression.TimestampLiteral timestamp(boolean nullable, LocalDateTime value) {
-    var epochMicro = TimeUnit.SECONDS.toMicros(value.toEpochSecond(ZoneOffset.UTC)) + TimeUnit.NANOSECONDS.toMicros(value.toLocalTime().getNano());
+    var epochMicro = TimeUnit.SECONDS.toMicros(value.toEpochSecond(ZoneOffset.UTC)) +
+        TimeUnit.NANOSECONDS.toMicros(value.toLocalTime().getNano());
     return timestamp(nullable, epochMicro);
   }
 
   public static Expression.TimestampLiteral timestamp(boolean nullable, int year, int month, int dayOfMonth, int hour, int minute, int second, int micros) {
-    return timestamp(nullable, LocalDateTime.of(year, month, dayOfMonth, hour, minute, second).withNano((int) TimeUnit.MICROSECONDS.toNanos(micros)));
+    return timestamp(nullable,
+        LocalDateTime.of(year, month, dayOfMonth, hour, minute, second)
+            .withNano((int) TimeUnit.MICROSECONDS.toNanos(micros)));
   }
 
   public static Expression.TimestampTZLiteral timestampTZ(boolean nullable, long value) {
@@ -148,7 +151,7 @@ public class ExpressionCreator {
   public static Expression.StructLiteral struct(boolean nullable, Expression.Literal... values) {
     return Expression.StructLiteral.builder().nullable(nullable).addFields(values).build();
   }
-  
+
   public static Expression.StructLiteral struct(boolean nullable, Iterable<? extends Expression.Literal> values) {
     return Expression.StructLiteral.builder().nullable(nullable).addAllFields(values).build();
   }
