@@ -15,6 +15,8 @@ import org.apache.calcite.rel.type.RelDataType;
 import org.apache.calcite.rel.type.RelDataTypeFactory;
 import org.apache.calcite.rex.RexBuilder;
 import org.apache.calcite.schema.impl.AbstractTable;
+import org.apache.calcite.sql.SqlExplainFormat;
+import org.apache.calcite.sql.SqlExplainLevel;
 import org.apache.calcite.sql.SqlNode;
 import org.apache.calcite.sql.SqlOperatorTable;
 import org.apache.calcite.sql.ddl.SqlColumnDeclaration;
@@ -30,7 +32,6 @@ import org.apache.calcite.sql.validate.SqlValidatorImpl;
 import org.apache.calcite.sql2rel.SqlToRelConverter;
 import org.apache.calcite.sql2rel.StandardConvertletTable;
 
-import io.substrait.isthmus.metadata.CanonicalizingIRMQ;
 import io.substrait.isthmus.metadata.LambdaMetadataSupplier;
 
 import java.util.ArrayList;
@@ -42,12 +43,12 @@ import java.util.List;
  */
 public class SqlToSubstrait {
 
-  public void execute(String sql, List<String> tables) throws SqlParseException {
+  public static String execute(String sql, List<String> tables) throws SqlParseException {
     CalciteSchema rootSchema = CalciteSchema.createRootSchema(false);
     SqlToRelConverter.Config converterConfig = SqlToRelConverter.config()
         .withTrimUnusedFields(true)
         .withExpand(false);
-        
+
     RelDataTypeFactory factory = new JavaTypeFactoryImpl();
     CalciteConnectionConfig config = CalciteConnectionConfig.DEFAULT.set(CalciteConnectionProperty.CASE_SENSITIVE, "false");
     CalciteCatalogReader catalogReader = new CalciteCatalogReader(rootSchema, Arrays.asList(), factory, config);
@@ -71,11 +72,13 @@ public class SqlToSubstrait {
     RelRoot root = converter.convertQuery(parsed, true, true);
 
     System.out.println(RelOptUtil.toString(root.rel));
-    System.out.println("Substrait: " + SubstraitRelVisitor.apply(root.rel).toString());
+    String jsonPlan = RelOptUtil.dumpPlan("", root.rel, SqlExplainFormat.JSON, SqlExplainLevel.ALL_ATTRIBUTES);
+    System.out.println(jsonPlan);
 
+    return jsonPlan;
   }
 
-  private DefinedTable parseCreateTable(RelDataTypeFactory factory, SqlValidator validator, String sql) throws SqlParseException {
+  private static DefinedTable parseCreateTable(RelDataTypeFactory factory, SqlValidator validator, String sql) throws SqlParseException {
 
     SqlParser parser = SqlParser.create(sql, SqlParser.Config.DEFAULT.withParserFactory(SqlDdlParserImpl.FACTORY));
     var parsed = parser.parseQuery();
