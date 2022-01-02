@@ -2,7 +2,7 @@
 // $ clang++/g++ -I./lib/build/native/nativeCompile -L./lib/build/native/nativeCompile example.cpp -listhmus-native -o example
 
 // Run with:
-// $ LD_PRELOAD_PATH=$(pwd)/lib/build/native/nativeCompile ./example
+// $ LD_LIBRARY_PATH=$(pwd)/lib/build/native/nativeCompile ./example
 
 #include "libisthmus-native.h"
 #include "stdio.h"
