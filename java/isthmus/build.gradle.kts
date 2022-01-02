@@ -156,7 +156,7 @@ graalvmNative {
             // This causes error during native build if set to true, but without it Windows fails with "The command is too long"
             // This makes it impossible to build on Windows unfortunately
             // "error: java.lang.SecurityException: Invalid signature file digest for Manifest main attributes"
-            useFatJar.set(true)
+            useFatJar.set(false)
 
             // Development options
             // agent {
